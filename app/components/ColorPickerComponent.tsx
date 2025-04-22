@@ -1,0 +1,131 @@
+'use client';
+import React, { useState, useRef, useEffect } from 'react';
+import ColorPicker from 'react-pick-color';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Check, Copy } from 'lucide-react';
+
+interface ColorPickerProps {
+  textColor: string;
+  setTextColor: (color: string) => void;
+  bgColor: string;
+  setBgColor: (color: string) => void;
+}
+
+function ColorPickerComponent({
+  textColor,
+  setTextColor,
+  setBgColor,
+  bgColor,
+}: ColorPickerProps) {
+  const [copied, setCopied] = useState<string | null>(null);
+  const [showTextPicker, setShowTextPicker] = useState(false);
+  const [showBgPicker, setShowBgPicker] = useState(false);
+
+  const textRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (textRef.current && !textRef.current.contains(e.target as Node)) {
+        setShowTextPicker(false);
+      }
+    }
+    if (showTextPicker) {
+      document.addEventListener('mousedown', handleClick);
+      return () => document.removeEventListener('mousedown', handleClick);
+    }
+  }, [showTextPicker]);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (bgRef.current && !bgRef.current.contains(e.target as Node)) {
+        setShowBgPicker(false);
+      }
+    }
+    if (showBgPicker) {
+      document.addEventListener('mousedown', handleClick);
+      return () => document.removeEventListener('mousedown', handleClick);
+    }
+  }, [showBgPicker]);
+
+  const copyToClipboard = (text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(type);
+    setTimeout(() => setCopied(null), 2000);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-center">
+        {/* text swatch + floating picker */}
+        <div className="relative" ref={textRef}>
+          <div
+            className="h-8 w-12 border border-gray-300 rounded-sm cursor-pointer"
+            style={{ backgroundColor: textColor }}
+            onClick={() => setShowTextPicker((v) => !v)}
+          />
+          {showTextPicker && (
+            <div className="absolute bottom-full mb-2 left-0 z-10">
+              <ColorPicker
+                hideAlpha
+                color={textColor}
+                onChange={(c) => setTextColor(c.hex)}
+              />
+            </div>
+          )}
+        </div>
+        <div className="flex justify-between items-center">
+          {/* <Label htmlFor="text">Text Color</Label> */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => copyToClipboard(textColor, 'text')}
+            className="h-8 px-2"
+          >
+            {copied === 'text' ? (
+              <Check className="h-4 w-4" />
+            ) : (
+              <Copy className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
+
+        {/* bg swatch + floating picker */}
+        <div className="relative" ref={bgRef}>
+          <div
+            className="h-8 w-12 rounded-sm border border-gray-300 cursor-pointer"
+            style={{ backgroundColor: bgColor }}
+            onClick={() => setShowBgPicker((v) => !v)}
+          />
+          {showBgPicker && (
+            <div className="absolute bottom-full mb-2 left-0 z-10">
+              <ColorPicker
+                hideAlpha
+                color={bgColor}
+                onChange={(c) => setBgColor(c.hex)}
+              />
+            </div>
+          )}
+        </div>
+        <div className="flex justify-between items-center">
+          {/* <Label htmlFor="bgColor">bgColor</Label> */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => copyToClipboard(bgColor, 'bgColor')}
+            className="h-8 px-2"
+          >
+            {copied === 'bgColor' ? (
+              <Check className="h-4 w-4" />
+            ) : (
+              <Copy className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ColorPickerComponent;
