@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import ColorPickerComponent from './components/ColorPickerComponent';
-import ContrastChecker from './components/ContrastChecker';
 import ColorHolder from './components/ColorHolder';
 
 export default function Home() {
