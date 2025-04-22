@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ColorPicker from 'react-pick-color';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Check, Copy, Repeat2 } from 'lucide-react';
 
 interface ColorPickerProps {

@@ -4,7 +4,6 @@ import ColorPickerComponent from './ColorPickerComponent';
 import ContrastChecker from './ContrastChecker';
 import LogoHolder from './LogoHolder';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 function ColorHolder() {
   const [svg, setSvg] = useState('');
