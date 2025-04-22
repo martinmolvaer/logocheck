@@ -8,8 +8,8 @@ import { Label } from '@/components/ui/label';
 
 function ColorHolder() {
   const [svg, setSvg] = useState('');
-  const [bgColor, setBgColor] = useState('#fefae0');
-  const [textColor, setTextColor] = useState('#283618');
+  const [bgColor, setBgColor] = useState('');
+  const [textColor, setTextColor] = useState('');
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

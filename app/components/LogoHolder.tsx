@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { text } from 'stream/consumers';
 
 interface LogoHolderProps {
   textColor: string;
@@ -50,16 +51,31 @@ function LogoHolder({ textColor, bgColor, svg }: LogoHolderProps) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-bird-icon lucide-bird"
+            className="lucide lucide-smile-icon lucide-smile"
           >
-            <path d="M16 7h.01" />
-            <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20" />
-            <path d="m20 7 2 .5-2 .5" />
-            <path d="M10 18v3" />
-            <path d="M14 17.75V21" />
-            <path d="M7 18a6 6 0 0 0 3.84-10.61" />
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+            <line x1="9" x2="9.01" y1="9" y2="9" />
+            <line x1="15" x2="15.01" y1="9" y2="9" />
           </svg>
         )}
+        {/* <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke={textColor}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-smile-icon lucide-smile"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+          <line x1="9" x2="9.01" y1="9" y2="9" />
+          <line x1="15" x2="15.01" y1="9" y2="9" />
+        </svg> */}
       </div>
       <div
         className="size-72 shadow-xs border border-gray-300 rounded-xl flex justify-center items-center p-6"
@@ -82,14 +98,12 @@ function LogoHolder({ textColor, bgColor, svg }: LogoHolderProps) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-bird-icon lucide-bird"
+            className="lucide lucide-smile-icon lucide-smile"
           >
-            <path d="M16 7h.01" />
-            <path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20" />
-            <path d="m20 7 2 .5-2 .5" />
-            <path d="M10 18v3" />
-            <path d="M14 17.75V21" />
-            <path d="M7 18a6 6 0 0 0 3.84-10.61" />
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+            <line x1="9" x2="9.01" y1="9" y2="9" />
+            <line x1="15" x2="15.01" y1="9" y2="9" />
           </svg>
         )}
       </div>

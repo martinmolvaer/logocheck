@@ -22,6 +22,25 @@ function ColorPickerComponent({
   const [showTextPicker, setShowTextPicker] = useState(false);
   const [showBgPicker, setShowBgPicker] = useState(false);
 
+  const getRandomColor = () =>
+    `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+
+  const isLightColor = (color: string) => {
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.5;
+  };
+
+  const randomBg = getRandomColor();
+  const randomText = isLightColor(randomBg) ? '#000000' : '#FFFFFF';
+
+  useEffect(() => {
+    setTextColor(randomText);
+    setBgColor(randomBg);
+  }, []);
+
   const textRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
