@@ -7,18 +7,18 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
     return (
       <label
         className={cn(
-          'relative flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed border-input bg-transparent px-4 py-6 text-center text-sm text-muted-foreground transition-colors hover:border-primary hover:bg-primary/5 focus-within:border-primary focus-within:bg-primary/5',
+          'relative flex  hover:shadow-md transition-all cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-gray-300 shadow-xs  bg-transparent px-4 py-6 text-center text-sm text-muted-foreground hover:border-primary hover:bg-primary/5 focus-within:border-primary focus-within:bg-primary/5',
           className
         )}
       >
         <input
           type="file"
           data-slot="input"
-          className="absolute inset-0 h-full w-full opacity-0"
+          className="absolute cursor-pointer inset-0 h-full w-full opacity-0"
           {...props}
         />
         <span>📁</span>
-        <span>Click or drag and drop to upload file</span>
+        <span className="text-md ">Click or drag and drop to upload SVG</span>
       </label>
     );
   }

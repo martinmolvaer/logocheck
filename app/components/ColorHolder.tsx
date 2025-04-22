@@ -23,28 +23,25 @@ function ColorHolder() {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div>
+      <div className="mb-4">
+        <Input
+          id="picture"
+          type="file"
+          accept=".svg"
+          onChange={handleFileUpload}
+        />
+      </div>
+      <LogoHolder textColor={textColor} bgColor={bgColor} svg={svg} />
       <ContrastChecker textColor={textColor} bgColor={bgColor} />
-      <div>
-        <LogoHolder textColor={textColor} bgColor={bgColor} svg={svg} />
-        <div className="grid w-full max-w-sm items-center gap-1.5 mt-4">
-          <Label htmlFor="picture">Upload your logo</Label>
-          <Input
-            id="picture"
-            type="file"
-            accept=".svg"
-            onChange={handleFileUpload}
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
+        <div className="bg-white p-2 rounded shadow-md">
+          <ColorPickerComponent
+            textColor={textColor}
+            bgColor={bgColor}
+            setBgColor={setBgColor}
+            setTextColor={setTextColor}
           />
-        </div>
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
-          <div className="bg-white p-2 rounded shadow-md">
-            <ColorPickerComponent
-              textColor={textColor}
-              bgColor={bgColor}
-              setBgColor={setBgColor}
-              setTextColor={setTextColor}
-            />
-          </div>
         </div>
       </div>
     </div>

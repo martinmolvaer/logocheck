@@ -7,39 +7,43 @@ interface LogoHolderProps {
 }
 
 function LogoHolder({ textColor, bgColor, svg }: LogoHolderProps) {
-  // tint SVG with textColor
+  // tint SVG with textColor and increase size
   const coloredSvgText = useMemo(() => {
     if (!svg) return null;
     return svg
       .replace(/(fill=")[^"]*(")/g, `$1${textColor}$2`)
-      .replace(/(stroke=")[^"]*(")/g, `$1${textColor}$2`);
+      .replace(/(stroke=")[^"]*(")/g, `$1${textColor}$2`)
+      .replace(/(width=")[^"]*(")/g, `$1100%$2`)
+      .replace(/(height=")[^"]*(")/g, `$1100%$2`);
   }, [svg, textColor]);
 
-  // tint SVG with bgColor
+  // tint SVG with bgColor and increase size
   const coloredSvgBg = useMemo(() => {
     if (!svg) return null;
     return svg
       .replace(/(fill=")[^"]*(")/g, `$1${bgColor}$2`)
-      .replace(/(stroke=")[^"]*(")/g, `$1${bgColor}$2`);
+      .replace(/(stroke=")[^"]*(")/g, `$1${bgColor}$2`)
+      .replace(/(width=")[^"]*(")/g, `$1100%$2`)
+      .replace(/(height=")[^"]*(")/g, `$1100%$2`);
   }, [svg, bgColor]);
 
   return (
-    <div className="flex items-center justify-center gap-8">
+    <div className="flex sm:flex-row flex-col items-center justify-center gap-8">
       <div
-        className="shadow-xs size-24 rounded-xl flex justify-center items-center p-4"
+        className="shadow-xs border border-gray-300 size-72 rounded-xl flex justify-center items-center p-6"
         style={{ backgroundColor: bgColor }}
       >
         {/* uploaded SVG tinted with textColor */}
         {coloredSvgText ? (
           <div
-            className="flex w-16 h-16 justify-center items-center"
+            className="flex w-24 h-24 justify-center items-center"
             dangerouslySetInnerHTML={{ __html: coloredSvgText }}
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="64"
-            height="64"
+            width="96"
+            height="96"
             viewBox="0 0 24 24"
             fill="none"
             stroke={textColor}
@@ -58,20 +62,20 @@ function LogoHolder({ textColor, bgColor, svg }: LogoHolderProps) {
         )}
       </div>
       <div
-        className="size-24 shadow-xs rounded-xl flex justify-center items-center p-4"
+        className="size-72 shadow-xs border border-gray-300 rounded-xl flex justify-center items-center p-6"
         style={{ backgroundColor: textColor }}
       >
         {/* uploaded SVG tinted with bgColor */}
         {coloredSvgBg ? (
           <div
-            className="flex w-16 h-16 justify-center items-center"
+            className="flex w-24 h-24 justify-center items-center"
             dangerouslySetInnerHTML={{ __html: coloredSvgBg }}
           />
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="64"
-            height="64"
+            width="96"
+            height="96"
             viewBox="0 0 24 24"
             fill="none"
             stroke={bgColor}
