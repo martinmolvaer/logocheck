@@ -22,28 +22,21 @@ function ColorHolder() {
   };
 
   return (
-    <div>
-      <div className="mb-4">
-        <Input
-          id="picture"
-          type="file"
-          accept=".svg"
-          onChange={handleFileUpload}
+    <>
+      <ContrastChecker textColor={textColor} bgColor={bgColor} />
+      <LogoHolder textColor={textColor} bgColor={bgColor} svg={svg} />
+      <div className="mt-4">
+        <Input type="file" accept=".svg" onChange={handleFileUpload} />
+      </div>
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
+        <ColorPickerComponent
+          textColor={textColor}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
+          setTextColor={setTextColor}
         />
       </div>
-      <LogoHolder textColor={textColor} bgColor={bgColor} svg={svg} />
-      <ContrastChecker textColor={textColor} bgColor={bgColor} />
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
-        <div className="bg-white p-2 rounded shadow-md">
-          <ColorPickerComponent
-            textColor={textColor}
-            bgColor={bgColor}
-            setBgColor={setBgColor}
-            setTextColor={setTextColor}
-          />
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 

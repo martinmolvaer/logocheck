@@ -39,12 +39,12 @@ export function ContrastChecker({ textColor, bgColor }: ContrastCheckerProps) {
   const neutral = contrastRatio === 3;
 
   return (
-    <CardContent className="flex flex-col items-center space-y-4 p-4 border border-gray-300 shadow-xs mt-4 rounded-lg">
+    <CardContent className="flex flex-col items-center space-y-4 p-4 border border-gray-300 shadow-xs mb-4 rounded-lg">
       <div className="text-5xl font-semibold">{contrastRatio.toFixed(2)}:1</div>
       <Badge
-        variant={passes ? 'default' : neutral ? 'secondary' : 'destructive'}
+        variant={passes ? 'secondary' : 'destructive'}
         className={`inline-flex items-center gap-1 ${
-          passes ? 'bg-green-400' : neutral ? 'bg-yellow-400' : 'bg-red-400'
+          passes ? 'bg-green-800 text-white' : 'bg-red-800'
         }`}
       >
         {passes ? (

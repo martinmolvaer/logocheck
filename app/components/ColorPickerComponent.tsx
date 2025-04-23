@@ -69,7 +69,7 @@ function ColorPickerComponent({
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2 p-2 max-w-full">
+    <div className="flex flex-wrap items-center justify-center gap-2 bg-white shadow rounded-md p-1 sm:p-2 max-w-full">
       {/* Background Color Picker */}
       <div className="flex items-center gap-1">
         <Popover>
@@ -86,7 +86,7 @@ function ColorPickerComponent({
               >
                 {bgColor}
               </span>
-              <ChevronDown className="h-3 w-3 ml-1" />
+              <ChevronDown color={textColor} className="h-3 w-3 ml-1 " />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="p-0 w-fit" align="start">
@@ -129,7 +129,7 @@ function ColorPickerComponent({
               >
                 {textColor}
               </span>
-              <ChevronDown className="h-3 w-3 ml-1" />
+              <ChevronDown color={bgColor} className="h-3 w-3 ml-1" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="p-0 w-fit" align="start">
