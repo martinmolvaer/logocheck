@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { CardContent } from '@/app/components/ui/card';
+import { Badge } from '@/app/components/ui/badge';
 import { AlertCircle, Check, Info } from 'lucide-react';
 
 type ContrastCheckerProps = {
@@ -54,11 +54,7 @@ export function ContrastChecker({ textColor, bgColor }: ContrastCheckerProps) {
         ) : (
           <AlertCircle className="h-4 w-4" />
         )}
-        {passes
-          ? 'Logo Contrast Pass'
-          : neutral
-          ? 'Logo Contrast Neutral'
-          : 'Logo Contrast Fail'}
+        {passes ? 'Logo Contrast Pass' : 'Logo Contrast Fail'}
       </Badge>
     </CardContent>
   );

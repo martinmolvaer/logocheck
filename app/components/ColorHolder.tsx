@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ColorPickerComponent from './ColorPickerComponent';
 import ContrastChecker from './ContrastChecker';
 import LogoHolder from './LogoHolder';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/app/components/ui/input';
 
 function ColorHolder() {
   const [svg, setSvg] = useState('');

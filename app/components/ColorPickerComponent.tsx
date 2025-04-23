@@ -1,8 +1,14 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ColorPicker from 'react-pick-color';
-import { Button } from '@/components/ui/button';
-import { Check, Copy, Repeat2 } from 'lucide-react';
+import { Button } from '@/app/components/ui/button';
+import { Check, Copy, Repeat2, ChevronDown } from 'lucide-react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/app/components/ui/popover';
+import { toast } from 'sonner';
 
 interface ColorPickerProps {
   textColor: string;
@@ -18,8 +24,6 @@ function ColorPickerComponent({
   bgColor,
 }: ColorPickerProps) {
   const [copied, setCopied] = useState<string | null>(null);
-  const [showTextPicker, setShowTextPicker] = useState(false);
-  const [showBgPicker, setShowBgPicker] = useState(false);
 
   const getRandomColor = () =>
     `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -40,123 +44,116 @@ function ColorPickerComponent({
     setBgColor(randomBg);
   }, []);
 
-  const textRef = useRef<HTMLDivElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (textRef.current && !textRef.current.contains(e.target as Node)) {
-        setShowTextPicker(false);
-      }
-    }
-    if (showTextPicker) {
-      document.addEventListener('mousedown', handleClick);
-      return () => document.removeEventListener('mousedown', handleClick);
-    }
-  }, [showTextPicker]);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (bgRef.current && !bgRef.current.contains(e.target as Node)) {
-        setShowBgPicker(false);
-      }
-    }
-    if (showBgPicker) {
-      document.addEventListener('mousedown', handleClick);
-      return () => document.removeEventListener('mousedown', handleClick);
-    }
-  }, [showBgPicker]);
-
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
     setCopied(type);
     setTimeout(() => setCopied(null), 2000);
-  };
-
-  // add swap handler
-  const swapColors = () => {
-    setTextColor(bgColor);
-    setBgColor(textColor);
+    toast.custom(
+      (t) => (
+        <div className="flex items-center gap-2 bg-white dark:bg-gray-800 border rounded-lg p-4 shadow-lg">
+          <div
+            className="w-8 h-8 rounded border"
+            style={{ backgroundColor: text }}
+          />
+          <div className="flex flex-col">
+            <p className="font-medium">Color copied!</p>
+            <p className="text-sm text-gray-500">{text}</p>
+          </div>
+        </div>
+      ),
+      {
+        duration: 2000,
+        position: 'bottom-right',
+      }
+    );
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-center">
-        {/* text swatch + floating picker */}
-
-        {/* bg swatch + floating picker */}
-        <div className="relative" ref={bgRef}>
-          <div
-            className="h-12 w-20 rounded-sm border border-gray-300 cursor-pointer"
-            style={{ backgroundColor: bgColor }}
-            onClick={() => setShowBgPicker((v) => !v)}
-          />
-
-          {showBgPicker && (
-            <div className="absolute bottom-full mb-2 left-0 z-10">
+    <div className="flex flex-wrap items-center justify-center gap-2 p-2 max-w-full">
+      {/* Background Color Picker */}
+      <div className="flex items-center gap-1">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-[100px] justify-between px-2"
+              style={{ backgroundColor: bgColor }}
+            >
+              <span
+                className="truncate text-xs"
+                style={{ color: isLightColor(bgColor) ? '#000' : '#fff' }}
+              >
+                {bgColor}
+              </span>
+              <ChevronDown className="h-3 w-3 ml-1" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0 w-fit" align="start">
+            <div className="w-[200px]">
               <ColorPicker
                 hideAlpha
                 color={bgColor}
                 onChange={(c) => setBgColor(c.hex)}
               />
             </div>
-          )}
-        </div>
-        <div className="flex justify-between items-center">
-          {/* <Label htmlFor="bgColor">bgColor</Label> */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => copyToClipboard(bgColor, 'bgColor')}
-            className="h-8 px-2"
-          >
-            {copied === 'bgColor' ? (
-              <Check className="h-4 w-4" />
-            ) : (
-              <Copy className="h-4 w-4" />
-            )}
-          </Button>
-        </div>
-        {/* swap swatch */}
-        <div
-          className="flex items-center justify-center flex-col mr-3 hover:bg-gray-100 cursor-pointer p-1 rounded-md"
-          onClick={swapColors} // ← hook up swap
+          </PopoverContent>
+        </Popover>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => copyToClipboard(bgColor, 'bgColor')}
+          className="h-8 w-8 p-0"
         >
-          <Repeat2 />
-          <p className="text-xs">Swap</p>
-        </div>
+          {copied === 'bgColor' ? (
+            <Check className="h-3 w-3" />
+          ) : (
+            <Copy className="h-3 w-3" />
+          )}
+        </Button>
+      </div>
 
-        <div className="relative" ref={textRef}>
-          <div
-            className="h-12 w-20 border border-gray-300 rounded-sm cursor-pointer"
-            style={{ backgroundColor: textColor }}
-            onClick={() => setShowTextPicker((v) => !v)}
-          />
-          {showTextPicker && (
-            <div className="absolute bottom-full mb-2 left-0 z-10">
+      {/* Text Color Picker */}
+      <div className="flex items-center gap-1">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-[100px] justify-between px-2"
+              style={{ backgroundColor: textColor }}
+            >
+              <span
+                className="truncate text-xs"
+                style={{ color: isLightColor(textColor) ? '#000' : '#fff' }}
+              >
+                {textColor}
+              </span>
+              <ChevronDown className="h-3 w-3 ml-1" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0 w-fit" align="start">
+            <div className="w-[200px]">
               <ColorPicker
                 hideAlpha
                 color={textColor}
                 onChange={(c) => setTextColor(c.hex)}
               />
             </div>
+          </PopoverContent>
+        </Popover>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => copyToClipboard(textColor, 'text')}
+          className="h-8 w-8 p-0"
+        >
+          {copied === 'text' ? (
+            <Check className="h-3 w-3" />
+          ) : (
+            <Copy className="h-3 w-3" />
           )}
-        </div>
-        <div className="flex justify-between items-center">
-          {/* <Label htmlFor="text">Text Color</Label> */}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => copyToClipboard(textColor, 'text')}
-            className="h-8 px-2"
-          >
-            {copied === 'text' ? (
-              <Check className="h-4 w-4" />
-            ) : (
-              <Copy className="h-4 w-4" />
-            )}
-          </Button>
-        </div>
+        </Button>
       </div>
     </div>
   );
