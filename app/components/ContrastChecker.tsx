@@ -36,7 +36,6 @@ const getContrastRatio = (hex1: string, hex2: string): number => {
 export function ContrastChecker({ textColor, bgColor }: ContrastCheckerProps) {
   const contrastRatio = getContrastRatio(textColor, bgColor);
   const passes = contrastRatio > 3;
-  const neutral = contrastRatio === 3;
 
   return (
     <CardContent className="flex flex-col items-center space-y-4 p-4 border border-gray-300 shadow-xs mb-4 rounded-lg">
@@ -49,8 +48,6 @@ export function ContrastChecker({ textColor, bgColor }: ContrastCheckerProps) {
       >
         {passes ? (
           <Check className="h-4 w-4" />
-        ) : neutral ? (
-          <Info className="h-4 w-4" />
         ) : (
           <AlertCircle className="h-4 w-4" />
         )}
